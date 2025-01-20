@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="12"
-  DTS:VersionGUID="{3625F866-BE38-4328-97B5-8AF742C8443C}">
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{22821026-858A-43A2-A6BD-422A48FA6B46}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -184,7 +184,17 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
-  <DTS:Variables />
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FC682342-BE30-4D0B-B120-A1066DBE4506}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
       DTS:refId="Package\Data Flow Task"
@@ -201,11 +211,11 @@
           version="1">
           <components>
             <component
-              refId="Package\Data Flow Task\Error ETL log"
+              refId="Package\Data Flow Task\Error ETL Log"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
-              name="Error ETL log"
+              name="Error ETL Log"
               usesDispositions="true"
               version="4">
               <properties>
@@ -225,7 +235,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -238,7 +248,7 @@
                   dataType="System.Int32"
                   description="Specifies the mode used to access the database."
                   name="AccessMode"
-                  typeConverter="AccessMode">0</property>
+                  typeConverter="AccessMode">3</property>
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
@@ -250,7 +260,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions"></property>
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -258,7 +268,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Data Flow Task\Error ETL log.Connections[OleDbConnection]"
+                  refId="Package\Data Flow Task\Error ETL Log.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[DEMIGODDRRE\SQLEXPRESS.NorthwellPracticeDWH]"
                   connectionManagerRefId="Package.ConnectionManagers[DEMIGODDRRE\SQLEXPRESS.NorthwellPracticeDWH]"
                   description="The OLE DB runtime connection used to access the database."
@@ -266,67 +276,73 @@
               </connections>
               <inputs>
                 <input
-                  refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input]"
+                  refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
-                  errorRowDisposition="RedirectRow"
+                  errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
                       cachedDataType="i4"
                       cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      externalMetadataColumnId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]" />
                     <inputColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].Columns[Flat File Source Error Output Column]"
-                      cachedCodepage="1252"
-                      cachedDataType="text"
-                      cachedName="Flat File Source Error Output Column"
-                      externalMetadataColumnId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[SourceRow]"
-                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]" />
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].Columns[ErrorDateTime]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ErrorDateTime"
+                      externalMetadataColumnId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDateTime]"
+                      lineageId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output].Columns[ErrorDateTime]" />
                     <inputColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].Columns[ProcessName]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="ProcessName"
+                      externalMetadataColumnId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ProcessName]"
+                      lineageId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output].Columns[ProcessName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
                       cachedDataType="i4"
                       cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[FailedColumn]"
+                      externalMetadataColumnId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[FailedColumn]"
                       lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorID]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorID]"
                       dataType="i4"
                       name="ErrorID" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDateTime]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDateTime]"
                       dataType="dbTimeStamp"
                       name="ErrorDateTime" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       dataType="wstr"
                       length="50"
                       name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDescription]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDescription]"
                       dataType="wstr"
                       length="255"
                       name="ErrorDescription" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[FailedColumn]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[FailedColumn]"
                       dataType="wstr"
                       length="50"
                       name="FailedColumn" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[FailedValue]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[FailedValue]"
                       dataType="nText"
                       name="FailedValue" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[SourceRow]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[SourceRow]"
                       dataType="nText"
                       name="SourceRow" />
                     <externalMetadataColumn
-                      refId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input].ExternalColumns[ProcessName]"
+                      refId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input].ExternalColumns[ProcessName]"
                       dataType="wstr"
                       length="255"
                       name="ProcessName" />
@@ -335,22 +351,22 @@
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Data Flow Task\Error ETL log.Outputs[OLE DB Destination Error Output]"
+                  refId="Package\Data Flow Task\Error ETL Log.Outputs[OLE DB Destination Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Data Flow Task\Error ETL log.Inputs[OLE DB Destination Input]">
+                  synchronousInputId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Data Flow Task\Error ETL log.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      refId="Package\Data Flow Task\Error ETL Log.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Data Flow Task\Error ETL log.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      lineageId="Package\Data Flow Task\Error ETL Log.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Data Flow Task\Error ETL log.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      refId="Package\Data Flow Task\Error ETL Log.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Data Flow Task\Error ETL log.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\Data Flow Task\Error ETL Log.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -833,6 +849,53 @@
                   exclusionGroup="1"
                   name="Derived Column Output"
                   synchronousInputId="Package\Data Flow Task\missing data to error table.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output].Columns[ErrorDateTime]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="RedirectRow"
+                      lineageId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output].Columns[ErrorDateTime]"
+                      name="ErrorDateTime"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output].Columns[ProcessName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="RedirectRow"
+                      length="10"
+                      lineageId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output].Columns[ProcessName]"
+                      name="ProcessName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"LoadClaims"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"LoadClaims"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
                   <externalMetadataColumns />
                 </output>
                 <output
@@ -885,7 +948,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1147,6 +1210,16 @@
           </components>
           <paths>
             <path
+              refId="Package\Data Flow Task.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task\Error ETL Log.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task\missing data to error table.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Flat File Source Error Output]"
+              endId="Package\Data Flow Task\missing data to error table.Inputs[Derived Column Input]"
+              name="Flat File Source Error Output"
+              startId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Error Output]" />
+            <path
               refId="Package\Data Flow Task.Paths[Flat File Source Output]"
               endId="Package\Data Flow Task\Stage Claims table.Inputs[OLE DB Destination Input]"
               name="Flat File Source Output"
@@ -1169,9 +1242,9 @@
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="153.333333333334,42.6666666666667"
+          Size="153.333333333334,42"
           Id="Package\Data Flow Task"
-          TopLeft="49.3749977927656,30.7894733461482" />
+          TopLeft="58.7499973736705,132.035086276899" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -1179,45 +1252,33 @@
     design-time-name="Package\Data Flow Task">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="154.666666666667,42.6666666666667"
-          Id="Package\Data Flow Task\Flat File Source"
-          TopLeft="22.4999989941716,11.631578819656" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\Data Flow Task\Error ETL log"
-          TopLeft="193.7499913387,146.421051023905" />
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="169.333333333334,42.6666666666667"
           Id="Package\Data Flow Task\Stage Claims table"
-          TopLeft="311.249986086041,79.368420181182" />
+          TopLeft="475.624978737906,16.4210524512791" />
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task\Flat File Source"
+          TopLeft="279.999987483024,14.3684208948692" />
+        <NodeLayout
+          Size="202.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task\missing data to error table"
+          TopLeft="254.624988349155,105.368419895707" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Flat File Source Output]"
-          TopLeft="99.833332327505,54.2982454863226">
+          TopLeft="434.666654149691,36.7280700064074">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="296.083320425203,25.0701746948593"
+              EndConnector="40.9583245882145,0"
               Start="0,0"
-              End="296.083320425203,17.5701746948593">
+              End="33.4583245882145,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,8.53508734742967" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,8.53508734742967"
-                    Point2="0,12.5350873474297"
-                    Point3="4,12.5350873474297" />
-                  <mssgle:LineSegment
-                    End="292.083320425203,12.5350873474297" />
-                  <mssgle:CubicBezierSegment
-                    Point1="292.083320425203,12.5350873474297"
-                    Point2="296.083320425203,12.5350873474297"
-                    Point3="296.083320425203,16.5350873474297" />
-                  <mssgle:LineSegment
-                    End="296.083320425203,17.5701746948593" />
+                    End="33.4583245882145,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1226,15 +1287,73 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Flat File Source Error Output]"
+          TopLeft="356.645821249423,57.0350875615358">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.3333323341712"
+              Start="0,0"
+              End="0,40.8333323341712">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.8333323341712" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-63.62638671875,14.6119786670856,127.2527734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <NodeLayout
-          Size="202.666666666667,42.6666666666667"
-          Id="Package\Data Flow Task\missing data to error table"
-          TopLeft="9.37499958090484,128.631577535019" />
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task\Error ETL Log"
+          TopLeft="358.874988069758,196.368418896545" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Derived Column Output]"
+          TopLeft="355.958321682488,148.035086562374">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.2499997206032,48.3333323341714"
+              Start="0,0"
+              End="76.2499997206032,40.8333323341714">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.1666661670857" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1666661670857"
+                    Point2="0,24.1666661670857"
+                    Point3="4,24.1666661670857" />
+                  <mssgle:LineSegment
+                    End="72.2499997206032,24.1666661670857" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72.2499997206032,24.1666661670857"
+                    Point2="76.2499997206032,24.1666661670857"
+                    Point3="76.2499997206032,28.1666661670857" />
+                  <mssgle:LineSegment
+                    End="76.2499997206032,40.8333323341714" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Data Flow Task\Error ETL log">
+    design-time-name="Package\Data Flow Task\Stage Claims table">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1247,7 +1366,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Data Flow Task\Stage Claims table">
+    design-time-name="Package\Data Flow Task\Error ETL Log">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
