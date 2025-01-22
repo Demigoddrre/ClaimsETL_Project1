@@ -39,75 +39,85 @@ The `LoadClaims.dtsx` package handles the ingestion of claims data from a flat f
    - Error output configured to redirect problematic rows for logging.
 
 2. **Derived Column Transformation**:
-   - To be added for:
-     - Generating `ProcessName` (static value: `LoadClaims`).
-     - Capturing `ErrorDateTime` using system variables.
-     - Generating custom error descriptions.
+   - Generates:
+     - `ProcessName`: Static value (`LoadClaims`).
+     - `ErrorDateTime`: Captured using system functions.
+     - Custom `ErrorDescription` (to be implemented).
 
 3. **OLE DB Destination**:
    - Configured to insert valid rows into the `dbo.Stg_Claims` table.
-   - Error rows redirected to an error-handling destination.
+   - Error rows redirected to the `dbo.ETL_Log` table.
 
 4. **Error Logging**:
-   - Errors redirected to the `dbo.ETL_Log` table for detailed logging.
-   - Flat File Source errors tracked with columns such as:
+   - Tracks error details using columns such as:
      - `ErrorCode`
      - `SourceRow`
-     - `ErrorDescription` (to be generated via Derived Column Transformation).
+     - `ErrorDescription` (to be implemented).
 
 ---
 
 ## **Steps Completed**
 1. **Flat File Source**:
-   - Set up connection and mappings.
-   - Configured error outputs to redirect to an error-handling path.
+   - Set up connection and mapped columns.
+   - Configured error outputs for problematic rows.
 
 2. **Error Handling**:
-   - Configured error redirection to the `dbo.ETL_Log` table.
-   - Mapped existing columns (`ErrorCode`, `SourceRow`) to the logging table.
+   - Redirected error outputs to `dbo.ETL_Log`.
+   - Mapped existing error fields (`ErrorCode`, `SourceRow`) for tracking.
 
 3. **OLE DB Destination**:
-   - Configured to insert valid rows into the staging table (`dbo.Stg_Claims`).
+   - Configured to load valid rows into the `dbo.Stg_Claims` staging table.
+
+---
+
+## **Challenges Encountered**
+1. **Warnings in Derived Column Transformation**:
+   - Issue: Mismatched data types when redirecting error rows.
+   - Resolution: Adjusted data type configurations and expressions.
+
+2. **Project Execution Errors**:
+   - Issue: Azure-Integrated SSIS project caused unexpected runtime issues.
+   - Resolution: Recreated project as a standard SSIS project.
+
+3. **Data Type Mismatches**:
+   - Issue: Aligning input column types with destination columns.
+   - Resolution: Used explicit data type conversions and validated mappings.
 
 ---
 
 ## **Next Steps**
-1. **Add Derived Column Transformation**:
-   - Create custom columns:
-     - `ProcessName`: Static value (`LoadClaims`).
-     - `ErrorDateTime`: Captured using `GETDATE()` or a system variable.
-     - `ErrorDescription`: Derived based on error codes or flat file issues.
+1. **Enhance Derived Column Transformation**:
+   - Implement custom error descriptions.
+   - Refine metadata generation (e.g., `ErrorDateTime`).
 
-2. **Test the Package**:
-   - Run the package to ensure data flows from the Flat File Source to:
-     - Staging table for valid rows (`dbo.Stg_Claims`).
-     - Error logging table (`dbo.ETL_Log`) for problematic rows.
+2. **Run and Test the Package**:
+   - Validate data flow:
+     - Staging table: Confirm valid rows are inserted.
+     - Error logging: Verify rows with issues are redirected.
 
-3. **Verify Staging Table Data**:
-   - Query `dbo.Stg_Claims` in SQL Server Management Studio (SSMS) to validate data insertion.
+3. **Verify Logging Tables**:
+   - Check `dbo.ETL_Log` and `dbo.ETL_FileTracking` for completeness and accuracy.
 
-4. **Verify Logging**:
-   - Check the `dbo.ETL_Log` table for logged errors and confirm proper error handling.
-
-5. **Document Results**:
-   - Update the `WorkflowDiagram.png` with the final configuration.
-   - Log key outcomes of the test in the `Logs/` directory.
+4. **Document Workflow**:
+   - Update `WorkflowDiagram.png` with final mappings and flow.
 
 ---
 
 ## **How to Run the Package**
 1. Open the SSIS project in Visual Studio.
-2. Select the `LoadClaims.dtsx` package in the **Solution Explorer**.
-3. Execute the package:
-   - Validate the data flow.
-   - Monitor the staging table and logs for results.
-4. Address any issues in error handling or data mapping.
+2. Select `LoadClaims.dtsx` in the **Solution Explorer**.
+3. Click the **Start** button (green arrow) to execute the package.
+4. Monitor the **Output** window for success/failure messages.
+5. Review results:
+   - **Staging Table**: Query `dbo.Stg_Claims` to validate data loading.
+   - **Error Log Table**: Check `dbo.ETL_Log` for error details.
 
 ---
 
 ## **Future Enhancements**
-- Automate the package execution using SQL Server Agent.
-- Implement incremental data loading for new or updated claims data.
-- Add data validation rules to flag discrepancies during the transformation process.
-- Integrate additional ETL tasks (`TransformClaims.dtsx`) to load data into Fact and Dimension tables.
+- Automate package execution using SQL Server Agent.
+- Add validation rules for null values and data format discrepancies.
+- Develop incremental load processes for updating claims data.
+- Expand ETL workflows to include fact and dimension tables for analytics.
 
+---
